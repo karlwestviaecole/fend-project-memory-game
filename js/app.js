@@ -1,16 +1,23 @@
-/*
- * Create a list that holds all of your cards
- */
 
+const game = {};
 
-/*
- * Display the cards on the page
- *   - shuffle the list of cards using the provided "shuffle" method below
- *   - loop through each card and create its HTML
- *   - add each card's HTML to the page
- */
+document.addEventListener('DOMContentLoaded', function () {
+    initGame();
+    startGame();
+});
 
-// Shuffle function from http://stackoverflow.com/a/2450976
+function initGame() {
+    game.deck = document.querySelector('.deck');
+}
+
+function startGame() {
+    const cardClasses = ['diamond', 'paper-plane-o', 'anchor', 'bolt', 'cube', 'leaf', 'bicycle', 'bomb'];
+    const doubledShuffled = shuffle(cardClasses.concat(cardClasses));
+
+    game.deck.innerHTML = '';
+    game.deck.appendChild(createCardsFragment(doubledShuffled));
+}
+
 function shuffle(array) {
     var currentIndex = array.length, temporaryValue, randomIndex;
 
@@ -23,6 +30,27 @@ function shuffle(array) {
     }
 
     return array;
+}
+
+
+function createCardsFragment(cardClasses) {
+
+    const fragment = document.createDocumentFragment();
+
+    for (let i = 0; i < cardClasses.length; i++) {
+
+        const newCard = document.createElement('li');
+        newCard.classList.add('card');
+
+        const newCardContent = document.createElement('i');
+        newCardContent.classList.add('fa')
+        newCardContent.classList.add('fa-' + cardClasses[i]);
+
+        newCard.appendChild(newCardContent);
+        fragment.appendChild(newCard);
+    }
+
+    return fragment;
 }
 
 
