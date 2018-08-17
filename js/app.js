@@ -52,6 +52,9 @@ function createCardsFragment(cardTypes) {
 
 function cardClickHandler(event) {
     const card = event.currentTarget;
+    if(cardIsOpen(card)) {
+        return;
+    }
     showCard(card);
     openCard(card);
     if (game.openCards.length === 2) {
@@ -74,25 +77,26 @@ function showCardAsMatching(card) {
 }
 
 function openCard(card) {
-    if(game.openCards.includes(card)) {
-        return; // already open
-    }
     game.openCards.push(card);
+}
+
+function cardIsOpen(card) {
+    return card.matches('.open');
 }
 
 function tryMatch(cardA, cardB) {
     if (doesMatch(cardA, cardB)) {
-        console.log('MATCH!');
         showCardAsMatching(cardA);
         showCardAsMatching(cardB);
     } else {
-        console.log('no match');
         hideCard(cardA);
         hideCard(cardB);
     }
     incrementMoves();
     game.openCards = [];
-    console.log(game.moves + ' moves');
+    if(allCardsMatch()) {
+        window.setTimeout(startGame, 1000);
+    }
 }
 
 function doesMatch(cardA, cardB) {
@@ -106,6 +110,10 @@ function incrementMoves() {
 function setMoveCounter(count) {
     game.moves = count;
     game.movesTarget.innerHTML = game.moves;
+}
+
+function allCardsMatch() {
+    return game.deck.querySelectorAll('.card:not(.match)').length === 0;
 }
 
 
