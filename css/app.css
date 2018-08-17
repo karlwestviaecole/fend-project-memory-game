@@ -17,7 +17,7 @@ body {
 }
 
 body {
-    background: #ffffff url('../img/geometry2.png'); /* Background pattern from Subtle Patterns */
+    background: #fff url('../img/geometry2.png'); /* Background pattern from Subtle Patterns */
     font-family: 'Coda', cursive;
 }
 
@@ -58,7 +58,7 @@ h1 {
     width: 125px;
     background-color: #2e3d49;
     font-size: 0;
-    color: #ffffff;
+    color: #fff;
     border-radius: 8px;
     cursor: pointer;
     display: flex;
@@ -87,46 +87,46 @@ h1 {
 
 @media (max-width: 700px) {
     .deck {
-        width:500px;
-        min-height:520px;
-        padding:24px;
+        width: 500px;
+        min-height: 520px;
+        padding: 24px;
     }
     .deck .card {
-        height:100px;
-        width:100px;
+        height: 100px;
+        width: 100px;
     }
     .deck .card.show {
-        font-size:28px;
+        font-size: 28px;
     }
 }
 
 @media (max-width: 520px) {
     .deck {
-        width:400px;
-        min-height:420px;
-        padding:16px;
+        width: 400px;
+        min-height: 420px;
+        padding: 16px;
     }
     .deck .card {
-        height:80px;
-        width:80px;
+        height: 80px;
+        width: 80px;
     }
     .deck .card.show {
-        font-size:24px;
+        font-size: 24px;
     }
 }
 
 @media (max-width: 410px) {
     .deck {
-        width:320px;
-        min-height:340px;
-        padding:8px;
+        width: 320px;
+        min-height: 340px;
+        padding: 8px;
     }
     .deck .card {
-        height:70px;
-        width:70px;
+        height: 70px;
+        width: 70px;
     }
     .deck .card.show {
-        font-size:16px;
+        font-size: 16px;
     }
 }
 
@@ -136,8 +136,8 @@ h1 {
  */
 
 .score-panel {
-    width:100%;
-    display:flex;
+    width: 100%;
+    display: flex;
     justify-content: space-around;
     margin-bottom: 10px;
 }
@@ -169,47 +169,47 @@ h1 {
  */
 
 .final-score {
-    position:fixed;
+    position: fixed;
     z-index: 1;
-    top:0;
-    left:0;
-    right:0;
-    bottom:0;
-    background-color:#fff;
-    color:#666;
-    display:flex;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: #fff;
+    color: #666;
+    display: flex;
     align-items: center;
     justify-content: center;
     text-align: center;
     visibility: hidden;
-    opacity:0;
-    transition:all .4s;
+    opacity: 0;
+    transition: all .4s;
 }
 
 .final-score.open {
     visibility: visible;
-    opacity:1;
+    opacity: 1;
 }
 .final-score-content {
-    transform:scale(0);
-    opacity:0;
-    transition:all .3s cubic-bezier(0.68, -0.55, 0.265, 1.55) .2s;
+    transform: scale(0);
+    opacity: 0;
+    transition: all .3s cubic-bezier(0.68, -0.55, 0.265, 1.55) .2s;
 }
 
 .final-score.open .final-score-content {
-    opacity:1;
-    transform:scale(1);
+    opacity: 1;
+    transform: scale(1);
 }
 
 .final-score-content h3 {
-    font-size:32px;
+    font-size: 32px;
     font-weight: normal;
-    margin:0;
+    margin: 0;
 }
 
 .final-score-content .btn {
     display: inline-block;
-    border:none;
+    border: none;
     color: #fff;
     background-color: #3C9AF4;
     cursor: pointer;
