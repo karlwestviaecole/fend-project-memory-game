@@ -140,15 +140,18 @@ function setMoveCounter(count) {
 
 function starCount() {
     if (game.moves < 11) {
-        return 3;
+        return 5;
     }
     if (game.moves < 16) {
-        return 2;
+        return 4;
     }
     if (game.moves < 21) {
-        return 1;
+        return 3;
     }
-    return 0;
+    if (game.moves < 26) {
+        return 2;
+    }
+    return 1;
 }
 
 function updateStars() {
