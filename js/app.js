@@ -64,7 +64,9 @@ function showCard(card) {
 }
 
 function hideCard(card) {
-    card.classList.remove('show', 'open');
+    window.setTimeout(function() {
+        card.classList.remove('show', 'open');
+    }, 1000);
 }
 
 function showCardAsMatching(card) {
