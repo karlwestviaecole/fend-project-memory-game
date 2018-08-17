@@ -4,7 +4,8 @@ const game = {
     cardTypes: ['diamond', 'paper-plane-o', 'anchor', 'bolt', 'cube', 'leaf', 'bicycle', 'bomb'],
     openCards: [],
     moves: 0,
-    movesTarget: null
+    movesTarget: null,
+    restartTarget: null
 };
 
 document.addEventListener('DOMContentLoaded', function () {
@@ -15,14 +16,16 @@ document.addEventListener('DOMContentLoaded', function () {
 function initGame() {
     game.deck = document.querySelector('.deck');
     game.movesTarget = document.querySelector('.moves');
+    game.restartTarget = document.querySelector('.restart');
+    game.restartTarget.onclick = startGame;
 }
 
 function startGame() {
     const doubledShuffledCardTypes = shuffle(game.cardTypes.concat(game.cardTypes));
     game.deck.innerHTML = '';
     game.deck.appendChild(createCardsFragment(doubledShuffledCardTypes));
-    game.moves = 0;
     game.openCards = [];
+    setMoveCounter(0);
 }
 
 function createCardsFragment(cardTypes) {
@@ -85,7 +88,7 @@ function tryMatch(cardA, cardB) {
         hideCard(cardA);
         hideCard(cardB);
     }
-    addMove();
+    incrementMoves();
     game.openCards = [];
     console.log(game.moves + ' moves');
 }
@@ -94,8 +97,12 @@ function doesMatch(cardA, cardB) {
     return cardA.getAttribute('data-card-type') === cardB.getAttribute('data-card-type');
 }
 
-function addMove() {
-    game.moves++;
+function incrementMoves() {
+    setMoveCounter(game.moves + 1)
+}
+
+function setMoveCounter(count) {
+    game.moves = count;
     game.movesTarget.innerHTML = game.moves;
 }
 
