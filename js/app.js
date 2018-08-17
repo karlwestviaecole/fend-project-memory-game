@@ -5,11 +5,15 @@ const game = {
     openCards: [],
     moves: 0,
     movesTarget: null,
+    durationTarget: null,
     starTargets: null,
     restartTarget: null,
     finalScoreTarget: null,
     finalMovesTarget: null,
-    finalStarsTarget: null
+    finalDurationTarget: null,
+    finalStarsTarget: null,
+    startTime: null,
+    endTime: null,
 };
 
 document.addEventListener('DOMContentLoaded', function () {
@@ -20,12 +24,15 @@ document.addEventListener('DOMContentLoaded', function () {
 function initGame() {
     game.deck = document.querySelector('.deck');
     game.movesTarget = document.querySelector('.moves');
+    game.durationTarget = document.querySelector('.duration');
     game.restartTarget = document.querySelector('.restart');
     game.restartTarget.onclick = startGame;
     game.starTargets = document.querySelectorAll('.fa-star, .fa-star-o');
     game.finalScoreTarget = document.querySelector('.final-score');
     game.finalMovesTarget = document.querySelector('.final-moves');
+    game.finalDurationTarget = document.querySelector('.final-duration');
     game.finalStarsTarget = document.querySelector('.final-stars');
+    window.setInterval(updateDuration, 1000);
 }
 
 function startGame() {
@@ -36,6 +43,12 @@ function startGame() {
     setMoveCounter(0);
     updateStars();
     hideFinalScore();
+    game.startTime = Date.now();
+    game.endTime = null;
+}
+
+function updateDuration() {
+    game.durationTarget.innerHTML = Math.round((Date.now() - game.startTime) / 1000);
 }
 
 function createCardsFragment(cardTypes) {
@@ -75,7 +88,8 @@ function cardClickHandler(event) {
     }
 
     if (allCardsMatch()) {
-        window.setTimeout(showFinalScore, 1000);
+        game.endTime = Date.now();
+        window.setTimeout(showFinalScore, 320);
     }
 }
 
@@ -155,6 +169,11 @@ function allCardsMatch() {
 
 function showFinalScore() {
     game.finalMovesTarget.innerHTML = game.moves + ' moves';
+    // Lazy set endTime for debugging
+    if (!game.endTime) {
+        game.endTime = Date.now();
+    }
+    game.finalDurationTarget.innerHTML = Math.round((game.endTime - game.startTime) / 1000) + ' seconds';
     game.finalStarsTarget.innerHTML = starCount() + ' stars';
     game.finalScoreTarget.classList.add('open');
 }

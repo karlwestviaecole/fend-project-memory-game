@@ -14,7 +14,7 @@
     <div class="final-score">
         <div class="final-score-content">
             <h3>Congratulations! You won!</h3>
-            <p>With <span class="final-moves"></span> you earned <span class="final-stars"></span></p>
+            <p>With <span class="final-moves"></span> in <span class="final-duration"></span> you earned <span class="final-stars"></span></p>
             <p><button class="btn" onclick="startGame();">Play again</button></p>
         </div>
     </div>
@@ -29,10 +29,13 @@
                 <li><i class="fa fa-star"></i></li>
                 <li><i class="fa fa-star"></i></li>
             </ul>
-
-            <span class="moves">0</span> Moves
-
-            <div class="restart">
+            <div>
+                <span class="moves">0</span> Moves
+            </div>
+            <div class="duration-panel">
+                <span class="duration">0</span> s
+            </div>
+            <div class="restart" title="Restart">
                 <i class="fa fa-repeat"></i>
             </div>
         </section>
