@@ -1,5 +1,10 @@
 
-const game = {};
+const game = {
+    deck: null,
+    cardTypes: ['diamond', 'paper-plane-o', 'anchor', 'bolt', 'cube', 'leaf', 'bicycle', 'bomb'],
+    openCards: [],
+    moves: 0
+};
 
 document.addEventListener('DOMContentLoaded', function () {
     initGame();
@@ -11,12 +16,94 @@ function initGame() {
 }
 
 function startGame() {
-    const cardClasses = ['diamond', 'paper-plane-o', 'anchor', 'bolt', 'cube', 'leaf', 'bicycle', 'bomb'];
-    const doubledShuffled = shuffle(cardClasses.concat(cardClasses));
-
+    const doubledShuffledCardTypes = shuffle(game.cardTypes.concat(game.cardTypes));
     game.deck.innerHTML = '';
-    game.deck.appendChild(createCardsFragment(doubledShuffled));
+    game.deck.appendChild(createCardsFragment(doubledShuffledCardTypes));
+    game.moves = 0;
+    game.openCards = [];
 }
+
+function createCardsFragment(cardTypes) {
+
+    const fragment = document.createDocumentFragment();
+
+    for (let i = 0; i < cardTypes.length; i++) {
+
+        const newCard = document.createElement('li');
+        newCard.classList.add('card');
+        newCard.setAttribute('data-card-type', cardTypes[i]);
+        newCard.onclick = cardClickHandler;
+
+        const newCardContent = document.createElement('i');
+        newCardContent.classList.add('fa')
+        newCardContent.classList.add('fa-' + cardTypes[i]);
+
+        newCard.appendChild(newCardContent);
+        fragment.appendChild(newCard);
+    }
+
+    return fragment;
+}
+
+function cardClickHandler(event) {
+    const card = event.currentTarget;
+    showCard(card);
+    openCard(card);
+    if (game.openCards.length === 2) {
+        tryMatch(game.openCards[0], game.openCards[1]);
+    }
+}
+
+function showCard(card) {
+    card.classList.add('show', 'open');
+}
+
+function hideCard(card) {
+    card.classList.remove('show', 'open');
+}
+
+function showCardAsMatching(card) {
+    card.classList.add('match');
+}
+
+function openCard(card) {
+    if(game.openCards.includes(card)) {
+        return; // already open
+    }
+    game.openCards.push(card);
+}
+
+function tryMatch(cardA, cardB) {
+    if (doesMatch(cardA, cardB)) {
+        console.log('MATCH!');
+        showCardAsMatching(cardA);
+        showCardAsMatching(cardB);
+    } else {
+        console.log('no match');
+        hideCard(cardA);
+        hideCard(cardB);
+    }
+    game.moves++;
+    game.openCards = [];
+    console.log(game.moves + ' moves');
+}
+
+function doesMatch(cardA, cardB) {
+    return cardA.getAttribute('data-card-type') === cardB.getAttribute('data-card-type');
+}
+
+
+/*
+ * set up the event listener for a card. If a card is clicked:
+ *  - display the card's symbol (put this functionality in another function that you call from this one)
+ *  - add the card to a *list* of "open" cards (put this functionality in another function that you call from this one)
+ *  - if the list already has another card, check to see if the two cards match
+ *    + if the cards do match, lock the cards in the open position (put this functionality in another function that you call from this one)
+ *    + if the cards do not match, remove the cards from the list and hide the card's symbol (put this functionality in another function that you call from this one)
+ *    + increment the move counter and display it on the page (put this functionality in another function that you call from this one)
+ *    + if all cards have matched, display a message with the final score (put this functionality in another function that you call from this one)
+ */
+
 
 function shuffle(array) {
     var currentIndex = array.length, temporaryValue, randomIndex;
@@ -31,36 +118,3 @@ function shuffle(array) {
 
     return array;
 }
-
-
-function createCardsFragment(cardClasses) {
-
-    const fragment = document.createDocumentFragment();
-
-    for (let i = 0; i < cardClasses.length; i++) {
-
-        const newCard = document.createElement('li');
-        newCard.classList.add('card');
-
-        const newCardContent = document.createElement('i');
-        newCardContent.classList.add('fa')
-        newCardContent.classList.add('fa-' + cardClasses[i]);
-
-        newCard.appendChild(newCardContent);
-        fragment.appendChild(newCard);
-    }
-
-    return fragment;
-}
-
-
-/*
- * set up the event listener for a card. If a card is clicked:
- *  - display the card's symbol (put this functionality in another function that you call from this one)
- *  - add the card to a *list* of "open" cards (put this functionality in another function that you call from this one)
- *  - if the list already has another card, check to see if the two cards match
- *    + if the cards do match, lock the cards in the open position (put this functionality in another function that you call from this one)
- *    + if the cards do not match, remove the cards from the list and hide the card's symbol (put this functionality in another function that you call from this one)
- *    + increment the move counter and display it on the page (put this functionality in another function that you call from this one)
- *    + if all cards have matched, display a message with the final score (put this functionality in another function that you call from this one)
- */
