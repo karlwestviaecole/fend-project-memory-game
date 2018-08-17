@@ -22,6 +22,8 @@ body {
 }
 
 .container {
+    max-width: 660px;
+    margin: 0 auto;
     display: flex;
     justify-content: center;
     align-items: center;
@@ -54,7 +56,7 @@ h1 {
 .deck .card {
     height: 125px;
     width: 125px;
-    background: #2e3d49;
+    background-color: #2e3d49;
     font-size: 0;
     color: #ffffff;
     border-radius: 8px;
@@ -63,12 +65,13 @@ h1 {
     justify-content: center;
     align-items: center;
     box-shadow: 5px 2px 20px 0 rgba(46, 61, 73, 0.5);
-    transition:all .2s;
+    transition-property: transform, background-color, font-size;
+    transition-duration: .2s;
 }
 
 .deck .card.open {
     transform: rotateY(0);
-    background: #02b3e4;
+    background-color: #02b3e4;
     cursor: default;
 }
 
@@ -82,14 +85,59 @@ h1 {
     font-size: 33px;
 }
 
+@media (max-width: 700px) {
+    .deck {
+        width:500px;
+        min-height:520px;
+        padding:24px;
+    }
+    .deck .card {
+        height:100px;
+        width:100px;
+    }
+    .deck .card.show {
+        font-size:28px;
+    }
+}
+
+@media (max-width: 520px) {
+    .deck {
+        width:400px;
+        min-height:420px;
+        padding:16px;
+    }
+    .deck .card {
+        height:80px;
+        width:80px;
+    }
+    .deck .card.show {
+        font-size:24px;
+    }
+}
+
+@media (max-width: 410px) {
+    .deck {
+        width:320px;
+        min-height:340px;
+        padding:8px;
+    }
+    .deck .card {
+        height:70px;
+        width:70px;
+    }
+    .deck .card.show {
+        font-size:16px;
+    }
+}
+
 
 /*
  * Styles for the score panel
  */
 
 .score-panel {
+    width:100%;
     display:flex;
-    width:660px;
     justify-content: space-around;
     margin-bottom: 10px;
 }
