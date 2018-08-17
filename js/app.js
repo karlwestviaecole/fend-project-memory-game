@@ -3,7 +3,8 @@ const game = {
     deck: null,
     cardTypes: ['diamond', 'paper-plane-o', 'anchor', 'bolt', 'cube', 'leaf', 'bicycle', 'bomb'],
     openCards: [],
-    moves: 0
+    moves: 0,
+    movesTarget: null
 };
 
 document.addEventListener('DOMContentLoaded', function () {
@@ -13,6 +14,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
 function initGame() {
     game.deck = document.querySelector('.deck');
+    game.movesTarget = document.querySelector('.moves');
 }
 
 function startGame() {
@@ -83,13 +85,18 @@ function tryMatch(cardA, cardB) {
         hideCard(cardA);
         hideCard(cardB);
     }
-    game.moves++;
+    addMove();
     game.openCards = [];
     console.log(game.moves + ' moves');
 }
 
 function doesMatch(cardA, cardB) {
     return cardA.getAttribute('data-card-type') === cardB.getAttribute('data-card-type');
+}
+
+function addMove() {
+    game.moves++;
+    game.movesTarget.innerHTML = game.moves;
 }
 
 
