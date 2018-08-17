@@ -82,8 +82,9 @@ h1 {
     font-size: 33px;
 }
 
+
 /*
- * Styles for the Score Panel
+ * Styles for the score panel
  */
 
 .score-panel {
@@ -107,4 +108,64 @@ h1 {
 .score-panel .restart {
     float: right;
     cursor: pointer;
+}
+
+
+/*
+ * Styles for the final score panel
+ */
+
+.final-score {
+    position:fixed;
+    z-index: 1;
+    top:0;
+    left:0;
+    right:0;
+    bottom:0;
+    background-color:#fff;
+    color:#666;
+    display:flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    visibility: hidden;
+    opacity:0;
+    transition:all .4s;
+}
+
+.final-score.open {
+    visibility: visible;
+    opacity:1;
+}
+.final-score-content {
+    transform:scale(0);
+    opacity:0;
+    transition:all .3s cubic-bezier(0.68, -0.55, 0.265, 1.55) .2s;
+}
+
+.final-score.open .final-score-content {
+    opacity:1;
+    transform:scale(1);
+}
+
+.final-score-content h3 {
+    font-size:32px;
+    margin:0;
+}
+
+.final-score-content .btn {
+    display: inline-block;
+    border:none;
+    color: #fff;
+    background-color: #3C9AF4;
+    cursor: pointer;
+    border-radius: 3px;
+    font-family: inherit;
+    font-size: 14px;
+    line-height: 20px;
+    padding: 8px 16px;
+    margin: 0;
+    text-align: center;
+    -moz-appearance: none;
+    -webkit-appearance: none;
 }

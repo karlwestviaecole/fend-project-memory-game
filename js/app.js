@@ -5,7 +5,11 @@ const game = {
     openCards: [],
     moves: 0,
     movesTarget: null,
-    restartTarget: null
+    starTargets: null,
+    restartTarget: null,
+    finalScoreTarget: null,
+    finalMovesTarget: null,
+    finalStarsTarget: null
 };
 
 document.addEventListener('DOMContentLoaded', function () {
@@ -18,6 +22,10 @@ function initGame() {
     game.movesTarget = document.querySelector('.moves');
     game.restartTarget = document.querySelector('.restart');
     game.restartTarget.onclick = startGame;
+    game.starTargets = document.querySelectorAll('.fa-star, .fa-star-o');
+    game.finalScoreTarget = document.querySelector('.final-score');
+    game.finalMovesTarget = document.querySelector('.final-moves');
+    game.finalStarsTarget = document.querySelector('.final-stars');
 }
 
 function startGame() {
@@ -26,6 +34,8 @@ function startGame() {
     game.deck.appendChild(createCardsFragment(doubledShuffledCardTypes));
     game.openCards = [];
     setMoveCounter(0);
+    updateStars();
+    hideFinalScore();
 }
 
 function createCardsFragment(cardTypes) {
@@ -52,13 +62,20 @@ function createCardsFragment(cardTypes) {
 
 function cardClickHandler(event) {
     const card = event.currentTarget;
-    if(cardIsOpen(card)) {
+    if (cardIsOpen(card)) {
         return;
     }
     showCard(card);
     openCard(card);
     if (game.openCards.length === 2) {
         tryMatch(game.openCards[0], game.openCards[1]);
+        incrementMoves();
+        updateStars();
+        game.openCards = [];
+    }
+
+    if (allCardsMatch()) {
+        window.setTimeout(showFinalScore, 1000);
     }
 }
 
@@ -67,7 +84,7 @@ function showCard(card) {
 }
 
 function hideCard(card) {
-    window.setTimeout(function() {
+    window.setTimeout(function () {
         card.classList.remove('show', 'open');
     }, 1000);
 }
@@ -92,11 +109,6 @@ function tryMatch(cardA, cardB) {
         hideCard(cardA);
         hideCard(cardB);
     }
-    incrementMoves();
-    game.openCards = [];
-    if(allCardsMatch()) {
-        window.setTimeout(startGame, 1000);
-    }
 }
 
 function doesMatch(cardA, cardB) {
@@ -112,22 +124,44 @@ function setMoveCounter(count) {
     game.movesTarget.innerHTML = game.moves;
 }
 
+function starCount() {
+    if (game.moves < 11) {
+        return 3;
+    }
+    if (game.moves < 16) {
+        return 2;
+    }
+    if (game.moves < 21) {
+        return 1;
+    }
+    return 0;
+}
+
+function updateStars() {
+    for (let i = 0; i < game.starTargets.length; i++) {
+        if ((i + 1) <= starCount()) {
+            game.starTargets[i].classList.add('fa-star');
+            game.starTargets[i].classList.remove('fa-star-o');
+        } else {
+            game.starTargets[i].classList.remove('fa-star');
+            game.starTargets[i].classList.add('fa-star-o');
+        }
+    }
+}
+
 function allCardsMatch() {
     return game.deck.querySelectorAll('.card:not(.match)').length === 0;
 }
 
+function showFinalScore() {
+    game.finalMovesTarget.innerHTML = game.moves + ' moves';
+    game.finalStarsTarget.innerHTML = starCount() + ' stars';
+    game.finalScoreTarget.classList.add('open');
+}
 
-/*
- * set up the event listener for a card. If a card is clicked:
- *  - display the card's symbol (put this functionality in another function that you call from this one)
- *  - add the card to a *list* of "open" cards (put this functionality in another function that you call from this one)
- *  - if the list already has another card, check to see if the two cards match
- *    + if the cards do match, lock the cards in the open position (put this functionality in another function that you call from this one)
- *    + if the cards do not match, remove the cards from the list and hide the card's symbol (put this functionality in another function that you call from this one)
- *    + increment the move counter and display it on the page (put this functionality in another function that you call from this one)
- *    + if all cards have matched, display a message with the final score (put this functionality in another function that you call from this one)
- */
-
+function hideFinalScore() {
+    game.finalScoreTarget.classList.remove('open');
+}
 
 function shuffle(array) {
     var currentIndex = array.length, temporaryValue, randomIndex;
