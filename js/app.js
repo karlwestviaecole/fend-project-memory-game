@@ -75,6 +75,9 @@ function createCardsFragment(cardTypes) {
 }
 
 function cardClickHandler(event) {
+    if (game.openCards.length === 2) {
+        return;
+    }
     const card = event.currentTarget;
     if (cardIsOpen(card)) {
         return;
@@ -82,12 +85,20 @@ function cardClickHandler(event) {
     showCard(card);
     openCard(card);
     if (game.openCards.length === 2) {
-        tryMatch(game.openCards[0], game.openCards[1]);
+        if (doesMatch(game.openCards[0], game.openCards[1])) {
+            showCardAsMatching(game.openCards[0]);
+            showCardAsMatching(game.openCards[1]);
+            game.openCards = [];
+        } else {
+            window.setTimeout(function () {
+                hideCard(game.openCards[0]);
+                hideCard(game.openCards[1]);
+                game.openCards = [];
+            }, 1000)
+        }
         incrementMoves();
         updateStars();
-        game.openCards = [];
     }
-
     if (allCardsMatch()) {
         game.endTime = Date.now();
         window.setTimeout(showFinalScore, 320);
@@ -99,9 +110,7 @@ function showCard(card) {
 }
 
 function hideCard(card) {
-    window.setTimeout(function () {
-        card.classList.remove('show', 'open');
-    }, 1000);
+    card.classList.remove('show', 'open');
 }
 
 function showCardAsMatching(card) {
@@ -114,16 +123,6 @@ function openCard(card) {
 
 function cardIsOpen(card) {
     return card.matches('.open');
-}
-
-function tryMatch(cardA, cardB) {
-    if (doesMatch(cardA, cardB)) {
-        showCardAsMatching(cardA);
-        showCardAsMatching(cardB);
-    } else {
-        hideCard(cardA);
-        hideCard(cardB);
-    }
 }
 
 function doesMatch(cardA, cardB) {
