@@ -4,9 +4,14 @@
 
 This project was developed as a submission for the Front-End Web Developer Nanodegree Program at [Udacity](https://udacity.com). This project is not maintained.
 
+## Dependencies
+
+* [Font Awesome](https://maxcdn.bootstrapcdn.com/font-awesome/4.6.1/css/font-awesome.min.css)
+* [Google Fonts](https://fonts.googleapis.com/css?family=Coda)
+
 ## Usage
 
-There are no dependencies for this project. Just open __index.html__ in your browser and you're ready to play! The game needs an internet connection to fetch some fonts and styles.
+Just open __index.html__ in your browser and you're ready to play! The game needs an internet connection to load its dependencies.
 
 ## How the game works
 
