@@ -23,5 +23,3 @@ You can restart the game any time you want!
 ## Contributing
 
 Since this repository basically is a submission to an online course, pull requests will likely not be merged into the project.
-
-For details, check out [CONTRIBUTING.md](CONTRIBUTING.md).
